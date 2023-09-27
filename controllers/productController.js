@@ -15,7 +15,7 @@ module.exports.getAllProducts = async (req, res) => {
     // const search = req.query.search || '';
     const keyword = req.query.keyword
       ? {
-        name: {
+        product_name: {
           $regex: req.query.keyword,
           $options: 'i',
         },
