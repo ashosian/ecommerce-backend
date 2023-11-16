@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 
 module.exports.getAllProducts = async (req, res) => {
-  // console.log(req.params);
+  // console.log(req.params);/
   console.log(req.query);
   try {
 
@@ -12,6 +12,7 @@ module.exports.getAllProducts = async (req, res) => {
 
     const page = parseInt(req.query.page) - 1 || 0;
     const limit = parseInt(req.query.limit) || 8;
+
     // const search = req.query.search || '';
     const keyword = req.query.keyword
       ? {
@@ -22,6 +23,7 @@ module.exports.getAllProducts = async (req, res) => {
       }
       : {};
 
+
     const count = await Product.countDocuments({ ...keyword });
     const product = await Product.find({ ...keyword })
       .limit(limit)
@@ -29,7 +31,7 @@ module.exports.getAllProducts = async (req, res) => {
 
 
 
-    res.json({ product, page: page + 1, pages: Math.ceil(count / limit) });
+    res.status(200).json({ product, page: page + 1, pages: Math.ceil(count / limit) });
   } catch (err) {
     console.log(err);
     return res.status(400).json({
@@ -40,6 +42,9 @@ module.exports.getAllProducts = async (req, res) => {
 
 
 }
+
+
+
 
 module.exports.getProductById = async (req, res) => {
   const { id } = req.params;
