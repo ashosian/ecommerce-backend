@@ -26,12 +26,23 @@ module.exports.getAllProducts = async (req, res) => {
 
     const count = await Product.countDocuments({ ...keyword });
     const product = await Product.find({ ...keyword })
+
       .limit(limit)
       .skip(page * limit);
 
 
+    const response = {
+      error: false,
+      count,
+      page: page + 1,
+      limit,
+      product,
 
-    res.status(200).json({ product, page: page + 1, pages: Math.ceil(count / limit) });
+
+    }
+
+    res.status(200).json(response);
+    // res.status(200).json({ product, page: page + 1, pages: Math.ceil(count / limit) });
   } catch (err) {
     console.log(err);
     return res.status(400).json({
